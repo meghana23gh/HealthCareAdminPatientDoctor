@@ -191,8 +191,7 @@ public class PatientController {
                 new ApiResponse<>(
                         "200",
                         "Patient records fetched successfully",
-                        patients,
-                        String.valueOf(LocalDateTime.now())
+                        patients
                 );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
