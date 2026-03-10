@@ -2,6 +2,7 @@ package nimblix.in.HealthCareHub.controller;
 
 import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.constants.HealthCareConstants;
+import nimblix.in.HealthCareHub.response.ApiResponse;
 import nimblix.in.HealthCareHub.model.Prescription;
 import nimblix.in.HealthCareHub.model.PrescriptionMedicines;
 import nimblix.in.HealthCareHub.model.Review;
@@ -165,6 +166,26 @@ public class PatientController {
        response.put("count", data.size());
        response.put("data", data);
        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/patient/forgot-password")
+    public ResponseEntity<ApiResponse> forgotPassword(@RequestBody PatientRegistrationRequest request) {
+
+        ApiResponse response = patientService.forgotPassword(request.getPhoneNumber(), request.getEmail());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/patient/reset-password")
+    public ResponseEntity<ApiResponse> resetPassword(@RequestBody PatientRegistrationRequest request) {
+
+        ApiResponse response = patientService.resetPassword(
+                request.getPhoneNumber(),
+                request.getEmail(),
+                request.getPassword()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
