@@ -11,7 +11,9 @@ import nimblix.in.HealthCareHub.response.PrescriptionMedicineResponse;
 import nimblix.in.HealthCareHub.response.PrescriptionResponse;
 import nimblix.in.HealthCareHub.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,15 +98,29 @@ public class PatientServiceImpl implements PatientService {
         }
     }
 
+//    @Override
+//    public String softDeletePatient(Long id) {
+//        Patient patient = patientRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Patient not found"));
+//
+////        patient.setDeleted();   //  Mark as deleted
+//        patientRepository.save(patient);
+//
+//        return "Patient soft deleted successfully";
+//    }
+
     @Override
     public String softDeletePatient(Long id) {
-        Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
 
-//        patient.setDeleted();   //  Mark as deleted
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found"));
+
+        patient.setDeleted(true);
+
         patientRepository.save(patient);
 
-        return "Patient soft deleted successfully";
+        return "Patient deleted successfully";
     }
 
     public Patient savePatient(Patient patient) {
@@ -181,5 +197,7 @@ public class PatientServiceImpl implements PatientService {
 //        return patient.getReviews();
         return null;
     }
+
+
 
 }

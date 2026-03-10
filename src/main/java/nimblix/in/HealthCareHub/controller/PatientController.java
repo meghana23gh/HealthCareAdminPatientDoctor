@@ -7,10 +7,7 @@ import nimblix.in.HealthCareHub.model.PrescriptionMedicines;
 import nimblix.in.HealthCareHub.model.Review;
 import nimblix.in.HealthCareHub.request.AdmitPatientRequest;
 import nimblix.in.HealthCareHub.request.PatientRegistrationRequest;
-import nimblix.in.HealthCareHub.response.AdmitPatientResponse;
-import nimblix.in.HealthCareHub.response.LabResultResponse;
-import nimblix.in.HealthCareHub.response.PrescriptionMedicineResponse;
-import nimblix.in.HealthCareHub.response.PrescriptionResponse;
+import nimblix.in.HealthCareHub.response.*;
 import nimblix.in.HealthCareHub.service.AdmissionService;
 import nimblix.in.HealthCareHub.service.LabResultService;
 import nimblix.in.HealthCareHub.service.PatientService;
@@ -170,21 +167,16 @@ public class PatientController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Object>> deletePatient(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deletePatient(@PathVariable Long id) {
 
         String message = patientService.softDeletePatient(id);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("patientId", id);
+        ApiResponse<Void> response = new ApiResponse<>();
+        response.setStatus("SUCCESS");
+        response.setMessage(message);
+        response.setData(null);
 
-        Map<String, Object> response = new LinkedHashMap<>();
-
-        response.put("status", "200");
-        response.put("message", message);
-        response.put("data", data);
-        response.put("timestamp", String.valueOf(LocalDateTime.now()));
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(response);
     }
 
 }
