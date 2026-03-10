@@ -17,6 +17,7 @@ import java.util.List;
 public interface PatientService {
     PrescriptionResponse<Prescription> getPrescription(Long id);
     PatientRegistrationResponse registerPatient(PatientRegistrationRequest request);
+    boolean softDeletePatient(Long id);
     PrescriptionMedicineResponse<PrescriptionMedicines> getPrescriptionMedicines(Long prescription_id);
     Patient savePatient(Patient patient);
    // String softDeletePatient(Long id);

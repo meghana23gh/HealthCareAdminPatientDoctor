@@ -8,12 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PatientRegistrationRequest {
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private String email;
-    private String password;
-    private String confirmPassword;
+
     private String phoneNumber;
 
     @NotBlank(message = "First name is required")
@@ -34,13 +29,4 @@ public class PatientRegistrationRequest {
 
     @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 }

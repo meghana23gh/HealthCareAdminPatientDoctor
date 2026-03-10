@@ -14,6 +14,10 @@ import nimblix.in.HealthCareHub.service.LabResultService;
 import nimblix.in.HealthCareHub.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import nimblix.in.HealthCareHub.model.Patient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -29,12 +33,11 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping("/register")
-    public ApiResponse<Patient> registerPatient(@Valid @RequestBody PatientRegistrationRequest request) {
+    public ApiResponse<PatientRegistrationResponse> registerPatient(
+            @Valid @RequestBody PatientRegistrationRequest request) {
 
-        // Call service to create Patient
-        Patient savedPatient = patientService.registerPatient(request);
+        PatientRegistrationResponse savedPatient = patientService.registerPatient(request);
 
-        // Return ApiResponse with patient data and message
         return new ApiResponse<>("SUCCESS", "Patient registered successfully", savedPatient);
     }
 
